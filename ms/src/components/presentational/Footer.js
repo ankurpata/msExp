@@ -11,9 +11,9 @@ return (
                     <img className="img-responsive footer-logo"  src={logoF} />
                 </div>
                 <p className="footer-company-about">
-                    Motorsingh is a single destination to search used cars from across the sites.
+                    Motorsingh is a single destination to search all the cars from across the sites.
                     We do the untidy work of searching multiple sites and display cars from all the sites, 
-                    including the best ones like Carwale, Cardekho, Olx and many more. 
+                    including the best ones like Carwale, Cardekho and many more. 
                 </p>
 
             </h3>

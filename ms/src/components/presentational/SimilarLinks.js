@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const SimilarLinks = ({similarLinks}) => {
     return (
             <div className="container">
+            {/* 
                 <div id="similar-links" > 
                     <h4 className="guide-mob-p">Similar Links</h4>
                     <ul className="list-inline" id="ul-similar-links">
@@ -24,8 +25,9 @@ const SimilarLinks = ({similarLinks}) => {
                         
                     </ul>
                 </div>
+                 */}
             </div>
-            );
+    );
 };
 
 export default SimilarLinks;

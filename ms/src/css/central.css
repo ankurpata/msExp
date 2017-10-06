@@ -24,8 +24,11 @@ body {
 .hero-feature:hover .thumbnail{
     box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: all 0.4s;
-    cursor: pointer;
+    /*cursor: pointer;*/
 
+}
+.get-details, .city-span-btn, .car-title, .car-image-wrap{
+    cursor: pointer !important;
 }
 .hero-feature:hover .car-image-wrap{
     /*box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
@@ -1194,6 +1197,61 @@ Search
 .avg-price{
     vertical-align: middle;
     line-height: 2.2;
+}
+
+.matching-variants{
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 3em;
+    height: 200px !important;
+    /* padding-bottom: 6px; */
+    /*    color: grey;
+        font-weight: 600;*/
+}
+
+.matching-variants-p{
+    color: grey;
+    font-weight: 600;
+
+}
+.variant-mini-details{
+    font-size: 12px;
+    color: grey;
+}
+
+.horizontal-ruler{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.city-span-btn {
+    padding: 4px 8px !important;
+    font-size: 13px !important;
+}
+.img-show-more{
+    max-width: 15px !important;
+    text-align: left;
+    float: left;
+    margin-top: -5px;
+}
+
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px;
+}
+.my-masonry-grid_column {
+  flex: 1;
+  min-width: 0;  
+  border-left: 20px solid transparent;
+  background-clip: padding-box;
+}
+ 
+.my-masonry-grid_column > div {
+  background: grey;
+  margin-bottom: 20px;
+}
+.show-more-variants{
+    margin-top: -1px !important;
 }
 /*//Only for mobile*/
 @media (max-width: 768px){ 

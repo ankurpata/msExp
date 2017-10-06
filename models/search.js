@@ -13,10 +13,10 @@ if (!db) {
 }
 
 var getWhat = () => {
-    var what = ['make', 'model', 'GROUP_CONCAT( DISTINCT make_url) as make_url', 'GROUP_CONCAT( DISTINCT model_url) as model_url',
+    var what = ['make', 'model', 'max(color) as maxColor ', 'sum(popularity) as popSum', 'GROUP_CONCAT( DISTINCT make_url) as make_url', 'GROUP_CONCAT( DISTINCT model_url) as model_url',
         'GROUP_CONCAT( DISTINCT img_url) as img_url', 'GROUP_CONCAT( DISTINCT domain) as domain',
         'GROUP_CONCAT( DISTINCT domain_unique_id) as domain_unique_id', 'round(AVG(price)) as price',
-        'GROUP_CONCAT("name:", variant,",url:", variant_url, ",transmission_type:", transmission_type, ",fuel_type:" , fuel_type, ",displacement:" , displacement, ",price:" , price) as variant_details'];
+        'GROUP_CONCAT("name:", variant,";url:", variant_url, ";transmission_type:", transmission_type, ";fuel_type:" , fuel_type, ";displacement:" , displacement, ";price:" , price) as variant_details '];
 //    var what = ['*'];
     var retWhat = "";
 
@@ -112,8 +112,9 @@ var getQuery = (what, where, pageNo) => {
         where += ' AND ';
     }
     var sql = domainIds.map(function (elem) {
-        return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model  LIMIT " + (pageNo * 4) + ', 4' + " )";
+        return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model ORDER BY popSum DESC LIMIT " + (pageNo * 4) + ', 4' + " )";
     }).join(" UNION ALL ");
+//    console.log(sql, '---sqll--');
     return sql;
 };
 var searchCars = (data, res, callback) => {

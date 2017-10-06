@@ -79,7 +79,7 @@ return (
             */}
              
             <div className="btn-primary btn-group range-btn">
-                <Button id ="dLabel5" onBlur={() => onBlur('yearOpen')}  className="btn btn-primary range-btn  dropdown-toggle" onClick={onClickYearTab}>
+                <Button disabled={true} id ="dLabel5" onBlur={() => onBlur('yearOpen')}  className="btn btn-primary range-btn  dropdown-toggle" onClick={onClickYearTab}>
                     Year
                 </Button>
                 <Collapse in={yearOpen}>
