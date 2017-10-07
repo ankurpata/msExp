@@ -10,23 +10,35 @@ import fetch from 'isomorphic-fetch';
 
 
 import { connect } from 'react-redux';
-import {searchCars} from '../../actions/';
+import {searchCars, getParamsFromUrl} from '../../actions/';
 
 class MainComponent extends Component {
     componentWillMount = () => {
-//        this.props.searchCars('');
+        var url = window.location.href;
+        var arr = url.split("/");
+        var b = {};
+        b = arr[3].split("-");
+        var items = [];
+        for (var i = 0; i < b.length; i++) {
+            var item = {};
+            item['label'] = b[i];
+            item['id'] = b[i];
+            item['type'] = '';
+            items.push(item);
+        }
+        this.props.getParamsFromUrl(items);
     }
     render() {
         return (<div>
-                    <Header searchTerm = 'asdfa'>
-                    </Header>
-                    <GuideBarContainer />
-                    <SliderBarContainer />
-                    <Loader />
-                    <BodyContainer />
-                    <SimilarLinks similarLinks = {this.props.similarLinksData}/>
-                    <Footer />
-                </div>
+            <Header searchTerm = 'asdfa'>
+            </Header>
+            <GuideBarContainer />
+            <SliderBarContainer />
+            <Loader />
+            <BodyContainer />
+            <SimilarLinks similarLinks = {this.props.similarLinksData}/>
+            <Footer />
+        </div>
                 );
     }
 
@@ -40,9 +52,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-//        updateTagAndSearchCars: (value) => {
-//            dispatch(updateTagAndSearchCars(value))
-//        }
+        getParamsFromUrl: (value) => {
+            dispatch(getParamsFromUrl(value))
+        }
     }
 }
 

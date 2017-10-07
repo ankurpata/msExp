@@ -13,6 +13,12 @@ export const hasErrored = (bool) => {
         hasErrored: bool
     }
 }
+export const getParamsFromUrl = (items) => {
+    return {
+        type: 'UPDATE_TAGS',
+        tagsValue: items
+    }
+}
 export const onClickSlide = (type, range) => {
     console.log(type, range)
     return {
