@@ -88,9 +88,11 @@ var processParams = (params) => {
                             fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
                                     .then((response) => response.json())
                                     .then((json) => {
-                                        console.log('--------------', json)
-                                        finalParams[ json[0]['type']] = json[0]['id'].split(" ");
-                                        console.log('--------------', finalParams)
+                                        if (json) {
+                                            console.log('--------------', json)
+                                            finalParams[ json[0]['type']] = json[0]['id'].split(" ");
+                                            console.log('--------------', finalParams)
+                                        }
                                         resolve(true);
                                     });
                         });
