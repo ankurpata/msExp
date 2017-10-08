@@ -20,10 +20,13 @@ class MainComponent extends Component {
         b = arr[3].split("-");
         var items = [];
         for (var i = 0; i < b.length; i++) {
+            if(b[i] === 'newcars'){
+                continue;
+            }
             var item = {};
             item['label'] = b[i];
             item['id'] = b[i];
-            item['type'] = '';
+            item['type'] = 'na';
             items.push(item);
         }
         this.props.getParamsFromUrl(items);
