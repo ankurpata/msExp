@@ -89,7 +89,7 @@ class Listing extends Component {
                         <i className="glyphicon glyphicon-bookmark"></i>
                     </span>    
                     <span className="car-image-logo">
-                        <img className="listing-logo" src={'images/logo-'+this.props.item.domain.trim() + '.png'} alt="" />
+                        <img className="listing-logo" src={require('../../images/logo-'+this.props.item.domain.trim() + '.png')} alt="" />
                     </span>    
                 </div>
                 <div className="caption">

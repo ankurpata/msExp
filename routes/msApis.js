@@ -22,12 +22,16 @@ router.get('/fetchSuggestions', (req, res) => {
     console.log(req.query.q, 'autosuggest');
     var items = [{id: 1, label: 'label1'}, {id: 2, label: 'label2'}, {id: 3, label: 'label3'}, {id: 4, label: 'label4'}]
 //    res.json({items: items})
-    return fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${req.query.q}`)
-            .then((response) => response.json())
-            .then((json) => {
+    if (req.query.q) {
+        return fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${req.query.q}`)
+                .then((response) => response.json())
+                .then((json) => {
 //                console.log(json, 'json');
-                res.json({items: json});
-            });
+                    res.json({items: json});
+                });
+    } else {
+        return false;
+    }
 
 });
 
@@ -69,37 +73,40 @@ var processParams = (params) => {
     return new Promise((resolve, reject) => {
         Promise.each(params, function (param) {
 
-            if (param['type'] === 'price') {
-                param['label'] = param['label'].replace('[price:', "").replace(']', "");
-                var priceArr = param['label'].split("-");
-                finalParams['price_min'] = priceArr[0];
-                finalParams['price_max'] = priceArr[1];
-            } else {
-                if (finalParams[param['type']]) {
-                    finalParams[param['type']] = finalParams[param['type']].concat(param['id'].split(" "));
+            /*
+             * if price
+             * if empty for free text add/url items add
+             */
+            if (param['type']) {
+                if (param['type'] === 'price') {
+                    param['label'] = param['label'].replace('[price:', "").replace(']', "");
+                    var priceArr = param['label'].split("-");
+                    finalParams['price_min'] = priceArr[0];
+                    finalParams['price_max'] = priceArr[1];
                 } else {
-                    if (param['type']) {
-                        finalParams[param['type']] = param['id'].split(" ");
+                    if (finalParams[param['type']]) {
+                        finalParams[param['type']] = finalParams[param['type']].concat(param['id'].split(" "));
                     } else {
-                        var tmp = param['id'].split(" ");
-                        //TODO: process na params by hitting autosugges api
-                        return new Promise((resolve, reject) => {
-
-                            fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
-                                    .then((response) => response.json())
-                                    .then((json) => {
-                                        if (json) {
-                                            console.log('--------------', json)
-                                            finalParams[ json[0]['type']] = json[0]['id'].split(" ");
-                                            console.log('--------------', finalParams)
-                                        }
-                                        resolve(true);
-                                    });
-                        });
+                        finalParams[param['type']] = param['id'].split(" ");
                     }
                 }
-            }
+            } else {
+                var tmp = param['id'].split(" ");
+                //TODO: process na params by hitting autosugges api
+                return new Promise((resolve, reject) => {
 
+                    fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
+                            .then((response) => response.json())
+                            .then((json) => {
+                                if (json) {
+                                    console.log('--------------', json);
+                                    finalParams[ json[0]['type']] = json[0]['id'].split(" ");
+                                    console.log('--------------', finalParams);
+                                }
+                                resolve(true);
+                            });
+                });
+            }
         }).then(() => {
             resolve(finalParams);
         });

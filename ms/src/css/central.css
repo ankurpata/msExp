@@ -521,7 +521,7 @@ b366a5
 .get-details{margin-top:10px;font-weight: bold;font-size: 16px; border-color: #337ab7 #007fad;}
 .car-image{
     max-height: 220px !important;
-    height: 220px !important;
+    height: 200px !important;
     background-color:#FFFFFF;
     margin-top:10px;
     overflow: hidden;

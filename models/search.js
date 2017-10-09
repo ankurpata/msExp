@@ -14,7 +14,7 @@ if (!db) {
 
 var getWhat = () => {
     var what = ['make', 'model', 'max(color) as maxColor ', 'sum(popularity) as popSum', 'GROUP_CONCAT( DISTINCT make_url) as make_url', 'GROUP_CONCAT( DISTINCT model_url) as model_url',
-        'GROUP_CONCAT( DISTINCT img_url) as img_url', 'GROUP_CONCAT( DISTINCT domain) as domain',
+        'max(img_url) as img_url', 'GROUP_CONCAT( DISTINCT domain) as domain',
         'GROUP_CONCAT( DISTINCT domain_unique_id) as domain_unique_id', 'round(AVG(price)) as price',
         'GROUP_CONCAT("name:", variant,";url:", variant_url, ";transmission_type:", transmission_type, ";fuel_type:" , fuel_type, ";displacement:" , displacement, ";price:" , price) as variant_details '];
 //    var what = ['*'];
