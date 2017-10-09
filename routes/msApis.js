@@ -77,14 +77,16 @@ var processParams = (params) => {
              * if price
              * if empty for free text add/url items add
              */
-            if (param['type']) {
+            if (param['type'] !== '') {
                 if (param['type'] === 'price') {
                     param['label'] = param['label'].replace('[price:', "").replace(']', "");
+                    console.log(2 + 'case');
                     var priceArr = param['label'].split("-");
                     finalParams['price_min'] = priceArr[0];
                     finalParams['price_max'] = priceArr[1];
                 } else {
                     if (finalParams[param['type']]) {
+                        console.log(1 + 'case');
                         finalParams[param['type']] = finalParams[param['type']].concat(param['id'].split(" "));
                     } else {
                         finalParams[param['type']] = param['id'].split(" ");
@@ -96,14 +98,22 @@ var processParams = (params) => {
                 return new Promise((resolve, reject) => {
 
                     fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
-                            .then((response) => response.json())
+                            .then((response) => {
+                                if (response) {
+                                    return response.json()
+                                } else {
+                                    return false;
+                                }
+                            })
                             .then((json) => {
-                                if (json) {
-                                    console.log('--------------', json);
+                                console.log('--------------', json);
+                                if (json.length) {
                                     finalParams[ json[0]['type']] = json[0]['id'].split(" ");
                                     console.log('--------------', finalParams);
+                                    resolve(true);
+                                } else {
+                                    resolve(true);
                                 }
-                                resolve(true);
                             });
                 });
             }
