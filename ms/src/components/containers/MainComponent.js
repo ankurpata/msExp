@@ -17,7 +17,7 @@ class MainComponent extends Component {
         var url = window.location.href;
         var arr = url.split("/");
         var b = {};
-        b = arr[3].split("-");
+        b = arr[4].split("-");
         var items = [];
         for (var i = 0; i < b.length; i++) {
             if (b[i] === 'newcars' || (!b[i])) {
