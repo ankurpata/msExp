@@ -122,7 +122,7 @@ export function searchCars(tags, pageNo = 0) {
         console.log('----updateTagAndSearchCars----', pageNo, tags, 'tags');
         var url = window.location.href;
         var arr = url.split("/");
-        var urlStr = arr[3];
+        var urlStr = arr[4];
         //TODO:Hit Api n get Car list, similarLinks and guides.
         fetch(searachUrl, {
             method: "post",
