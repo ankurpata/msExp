@@ -15,7 +15,7 @@ return (
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="#">          
+                    <a href="http://www.motorsingh.com/">          
                         <img className ="img-responsive" src={logo}  />
                     </a>
                 </Navbar.Brand>
