@@ -15,6 +15,7 @@
     "react-bootstrap-typeahead": "^2.0.0-alpha.3",
     "react-dom": "^15.6.1",
     "react-fa": "^4.2.0",
+    "react-ga": "^2.3.5",
     "react-helmet": "^5.2.0",
     "react-layout-pack": "^0.2.3",
     "react-masonry-layout": "^0.2.3",
