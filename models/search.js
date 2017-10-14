@@ -112,7 +112,7 @@ var getH1 = (urlStr) => {
 }
 var getDesc = (urlStr) => {
     var h1 = 'New Cars in India';
-    if(urlStr && urlStr != 'newcars'){
+    if(urlStr && urlStr != 'newcars' && urlStr != '#'){
         h1 = urlStr.replace(/-/g, " ");
     }
     return commonApis.titleCase(h1);
