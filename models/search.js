@@ -126,7 +126,7 @@ var getQuery = (what, where, pageNo) => {
         where += ' AND ';
     }
     var sql = domainIds.map(function (elem) {
-        return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model ORDER BY popSum DESC LIMIT " + (pageNo * 4) + ', 4' + " )";
+        return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model ORDER BY popSum DESC LIMIT " + (pageNo * 4) + ', 8' + " )";
     }).join(" UNION ALL ");
 //    console.log(sql, '---sqll--');
     return sql;
