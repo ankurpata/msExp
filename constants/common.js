@@ -177,7 +177,9 @@ const  getFormatNo = (priceStr) => {
         actPrice = 10000000 * (actPrice.replace(/crores/g, "").trim());
     } else if ((actPrice.indexOf('crore') >= 0)) {
         actPrice = 10000000 * (actPrice.replace(/crore/g, "").trim());
-    } else if ((actPrice.indexOf('lakhs') >= 0)) {
+    }else if ((actPrice.indexOf('cr') >= 0)) {
+        actPrice = 10000000 * (actPrice.replace(/cr/g, "").trim());
+    }else if ((actPrice.indexOf('lakhs') >= 0)) {
         actPrice = 100000 * (actPrice.replace(/lakhs/g, "").trim());
     } else if ((actPrice.indexOf('lakh') >= 0)) {
         actPrice = 100000 * (actPrice.replace(/lakh/g, "").trim());
@@ -196,8 +198,18 @@ const getIndianFormat = (x) => {
         lastThree = ',' + lastThree;
     var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
     return res;
-}
+};
+
+const titleCase = (str) => {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+   return splitStr.join(' '); 
+};
+
 exports.scrapperFieldMapping = scrapperFieldMapping;
 exports.getFormatNo = getFormatNo;
 exports.getTime = getTime;
 exports.getIndianFormat = getIndianFormat;
+exports.titleCase = titleCase;

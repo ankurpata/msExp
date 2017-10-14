@@ -133,6 +133,8 @@ router.post('/searchCars', (req, res) => {
         if (req.body.pageNo) {
             reqParams['pageNo'] = req.body.pageNo;
         }
+        reqParams['urlStr'] = req.body.urlStr;
+        
         console.log(reqParams, '????reqParams????');
         searchModel.searchCars(reqParams, res, function (returnedValue) {
             res.json(returnedValue);

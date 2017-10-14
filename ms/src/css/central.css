@@ -521,7 +521,7 @@ b366a5
 .get-details{margin-top:10px;font-weight: bold;font-size: 16px; border-color: #337ab7 #007fad;}
 .car-image{
     max-height: 220px !important;
-    height: 200px !important;
+    height: 180px !important;
     background-color:#FFFFFF;
     margin-top:10px;
     overflow: hidden;
@@ -1153,7 +1153,7 @@ Search
     padding: 2px;font-size:12px;
 }
 .hideMe{
-    display: none;
+    display: none !important;
 }
 .slick-slide{
     margin-left: 10px;
@@ -1236,19 +1236,19 @@ Search
 
 
 .my-masonry-grid {
-  display: flex;
-  margin-left: -20px;
+    display: flex;
+    margin-left: -20px;
 }
 .my-masonry-grid_column {
-  flex: 1;
-  min-width: 0;  
-  border-left: 20px solid transparent;
-  background-clip: padding-box;
+    flex: 1;
+    min-width: 0;  
+    border-left: 20px solid transparent;
+    background-clip: padding-box;
 }
- 
+
 .my-masonry-grid_column > div {
-  background: grey;
-  margin-bottom: 20px;
+    background: grey;
+    margin-bottom: 20px;
 }
 .show-more-variants{
     margin-top: -1px !important;
@@ -1274,6 +1274,7 @@ Search
     .slick-next{
         left:95% !important;
     }
+    .navbar-nav{ width: 100% !important; }
 }
 /*//Only for desktop*/
 @media (min-width: 768px){

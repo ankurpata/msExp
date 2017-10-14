@@ -1,16 +1,16 @@
 var db = require('../config/db.js');
 var commonApis = require('../constants/common');
 
-
-if (!db) {
-    db.connect(function (err) {
-        if (!err) {
-            console.log("Database is connectedd.");
-        } else {
-            console.log("Error connecting databases.");
-        }
-    });
-}
+//
+//if (!db) {
+//    db.connect(function (err) {
+//        if (!err) {
+//            console.log("Database is connectedd.");
+//        } else {
+//            console.log("Error connecting databases.");
+//        }
+//    });
+//}
 
 var getWhat = () => {
     var what = ['make', 'model', 'max(color) as maxColor ', 'sum(popularity) as popSum', 'GROUP_CONCAT( DISTINCT make_url) as make_url', 'GROUP_CONCAT( DISTINCT model_url) as model_url',
@@ -103,6 +103,20 @@ var getWhereStr = (data) => {
 };
 
 
+var getH1 = (urlStr) => {
+    var h1 = 'New Cars in India';
+    if(urlStr){
+        h1 = urlStr.replace(/-/g, " ");
+    }
+    return commonApis.titleCase(h1);
+}
+var getDesc = (urlStr) => {
+    var h1 = 'New Cars in India';
+    if(urlStr){
+        h1 = urlStr.replace(/-/g, " ");
+    }
+    return commonApis.titleCase(h1);
+}
 var getQuery = (what, where, pageNo) => {
 
     var domainIds = [1, 2, 3, 4, 5, 6];
@@ -135,13 +149,17 @@ var searchCars = (data, res, callback) => {
             }
             var numRows = result2[0].total_count;
             var heading = {};
-            heading.h1Text = "Search and compare new cars from all the sites.";
+            heading.h1Text = getH1(data['urlStr']);
             heading.h2Text = commonApis.getIndianFormat(numRows) + " new car listings found across 6 different platforms.";
             heading.metaTags = {
-                title: "Search and compare new cars from all the sites.| Get discount upto 10% on selected dealers.",
+                title: getH1(data['urlStr']) + " | Get discount upto 10% on selected dealers.",
                 //            canonical: "new Canonical dynamic",
-                description: commonApis.getTime() + ' - ' + commonApis.getIndianFormat(numRows) + " cars for your search",
-                keywords: "new cars, carwale, cardehko",
+                description: (result.length ?  commonApis.getTime() + ' - ' + commonApis.getIndianFormat(numRows) +
+                        " cars listings found | Get details for " +
+                        result[0]['make'] + " " + result[0]['model'] + " " + result[0]['domain'].toUpperCase() + ", " + 
+                        result[1]['make'] + " " + result[1]['model'] + " " + result[1]['domain'].toUpperCase() 
+                        : commonApis.getTime() + " - " + "No listings found for " + getH1(data['urlStr'])),
+                keywords: getH1(data['urlStr']) + ", new cars, carwale, cardehko",
             };
 
             response.heading = heading;

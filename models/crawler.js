@@ -6,19 +6,22 @@
 
 var db = require('../config/db.js');
 
-db.connect(function (err) {
-    if (!err) {
-        console.log("Database is connectedd.");
-    } else {
-        console.log("Error connecting databases.");
-    }
-});
+//db.connect(function (err) {
+//    if (!err) {
+//        console.log("Database is connectedd.");
+//    } else {
+//        console.log("Error connecting databases.");
+//    }
+//});
 
 function saveCWData(data) {
 
-    var query = db.query('INSERT INTO nc_crawled SET ?', data,
+    var query = db.query('INSERT INTO nc_cars SET ?', data,
             function (err, result) {
                 if (err) {
+//                    console.log(data, '_____data___');
+                    console.log(this.sql, 'sql');
+//                    console.log(query, 'query');
                     console.log(err.code, err.sqlMessage);
                 }else{
                     console.log("Something else happened", err, result, data.variant_url)

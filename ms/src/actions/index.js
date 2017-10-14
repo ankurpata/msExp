@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import ReactGA from 'react-ga';
 var searachUrl = "/api/searchCars";
 
 export const similarLinks = (items) => {
@@ -20,7 +21,12 @@ export const getParamsFromUrl = (items) => {
     }
 }
 export const onClickSlide = (type, range) => {
-    console.log(type, range)
+    console.log(type, range);
+    ReactGA.event({
+        category: 'Home',
+        action: 'Slider Click',
+        label: '[' + type + ':' + range[0] + '-' + range[1] + ']'
+    });
     return {
         type: 'ADD_GUIDE',
         tagsValue: [{type: type, label: '[' + type + ':' + range[0] + '-' + range[1] + ']'}]
@@ -46,19 +52,34 @@ export function itemsFetchData(url) {
 }
 
 export function updateTags(value) {
+    ReactGA.event({
+        category: 'Home',
+        action: 'UPDATE_TAGS',
+        value: "tags: " + value.toString()
+    });
     return {
         type: 'UPDATE_TAGS',
         tagsValue: value
     }
 }
 export function updateGuides(guideArray) {
+    ReactGA.event({
+        category: 'Home',
+        action: 'UPDATE_GUIDES',
+        value: "guides:" + guideArray.toString()
+    });
     return {
         type: 'UPDATE_GUIDES',
         guideArray: guideArray
-    }
+    };
 }
 export function updateListing(carlist, pageNo) {
     if (pageNo) {
+        ReactGA.event({
+            category: 'Home',
+            action: 'Page Scroll',
+            value: 'pageNo' + pageNo
+        });
         return {
             type: 'LOAD_MORE_CARS',
             carlist: carlist
@@ -79,6 +100,11 @@ export function updateHeading(heading) {
 }
 export function addGuide(guide) {
     console.log(guide);
+    ReactGA.event({
+        category: 'Home',
+        action: 'ADD_GUIDE',
+        value: 'guide: ' + guide.toString()
+    });
     return {
         type: 'ADD_GUIDE',
         tagsValue: [guide] //TODO: handle this part properyly
@@ -94,6 +120,9 @@ export function loadMoreCars() {
 export function searchCars(tags, pageNo = 0) {
     return (dispatch) => {
         console.log('----updateTagAndSearchCars----', pageNo, tags, 'tags');
+        var url = window.location.href;
+        var arr = url.split("/");
+        var urlStr = arr[3];
         //TODO:Hit Api n get Car list, similarLinks and guides.
         fetch(searachUrl, {
             method: "post",
@@ -103,7 +132,8 @@ export function searchCars(tags, pageNo = 0) {
             },
             body: JSON.stringify({
                 tags: tags,
-                pageNo: pageNo
+                pageNo: pageNo,
+                urlStr: urlStr
             })
 
         }).then((response) => {

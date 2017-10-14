@@ -7,6 +7,7 @@ import GuideBarContainer from './GuideBarContainer';
 import SliderBarContainer from './SliderBarContainer';
 import BodyContainer from './BodyContainer';
 import fetch from 'isomorphic-fetch';
+import ReactGA from 'react-ga';
 
 
 import { connect } from 'react-redux';
@@ -14,10 +15,14 @@ import {searchCars, getParamsFromUrl} from '../../actions/';
 
 class MainComponent extends Component {
     componentWillMount = () => {
+        ReactGA.initialize('UA-90913008-1'); //Unique Google Analytics tracking number
+        ReactGA.pageview(window.location.href);
+
         var url = window.location.href;
         var arr = url.split("/");
         var b = {};
         b = arr[4].split("-");
+//        b = arr[3].split("-");
         var items = [];
         for (var i = 0; i < b.length; i++) {
             if (b[i] === 'newcars' || (!b[i])) {

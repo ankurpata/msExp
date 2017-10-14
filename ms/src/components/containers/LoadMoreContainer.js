@@ -7,9 +7,10 @@ class LoadMoreContainer extends Component {
     onLoadMoreClick = (e) => {
         this.props.loadMoreCars();
     }
+    
     render() {
         return (
-                <div id="loadMore" onClick={this.onLoadMoreClick} className="btn btn-block btn-lg btn-primary" >
+                <div id="loadMore" onClick={this.onLoadMoreClick} className={ this.props.carlist.length ? 'btn btn-block btn-lg btn-primary' : 'hideMe' } >
                     Load More
                 </div>
                 );
@@ -18,6 +19,7 @@ class LoadMoreContainer extends Component {
 const mapStateToProps = (state) => {
     return {
 //        tagsValue: state.tagReducer.tagsValue,
+        carlist: state.listingReducer.carlist
     }
 };
 

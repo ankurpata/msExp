@@ -55,7 +55,7 @@ router.get('/getCW', (req, res) => {
                                             request("https://www.carwale.com" + m$("a", this).attr('href'), function (err, resp, html) {
                                                 if (!err) {
                                                     var v$ = cheerio.load(html);
-                                                    var data = [];
+                                                    var data = {};
                                                     //extract and save data in db.
                                                     data['model_url'] = modelUrl;
                                                     data['make_url'] = makeUrl;
@@ -68,13 +68,36 @@ router.get('/getCW', (req, res) => {
                                                     data['img_url'] = v$('div.gallery-wrapper  div.jcarousel ul li:nth-child(1)').find('img').attr('src');
                                                     data['price'] = v$('div#divModelDesc  div.leftfloat div.textBlock span.font24.text-black.margin-right5').text().replace(/[\n\t\r›₹]/g, "").trim();
                                                     data['price'] = commonApis.getFormatNo(data['price']);
+                                                    var otherArray = [];
                                                     v$('table#tbOverview tbody tr').each(function (i, elm) {
-                                                        data[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        var tpc = v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim();
+                                                        if (tpc === 'Fuel Type') {
+                                                            data['fuel_type'] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        } else if (tpc === 'Transmission Type') {
+                                                            data['transmission_type'] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        } else if (tpc == 'Seating Capacity') {
+                                                            data['seating_capacity'] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        } else if (tpc == 'Displacement') {
+                                                            data['displacement'] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        } else if (tpc == 'No of gears') {
+                                                            data['no_of_gears'] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                        } else {
+                                                            if (v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != '' &&
+                                                                    v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'No' &&
+                                                                    v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'NA') {
+                                                                otherArray[tpc] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                            }
+                                                        }
+//                                                        data[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
                                                     })
 
                                                     v$('table.specs').each(function (i, elm) {
                                                         v$("tr[itemmasterid]", this).each(function (i, elm) {
-                                                            data[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                            if (v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != '' &&
+                                                                    v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'No' &&
+                                                                    v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'NA') {
+                                                                otherArray[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                            }
                                                         })
                                                     })
 
@@ -82,7 +105,11 @@ router.get('/getCW', (req, res) => {
                                                         var b = true;
                                                         v$("tr", this).each(function (i, elm) {
                                                             if (!b) {
-                                                                data[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                                if (v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != '' &&
+                                                                        v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'No' &&
+                                                                        v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim() != 'NA') {
+                                                                    otherArray[v$("td", this).first().text().replace(/[\n\t\r]/g, "").trim()] = v$("td", this).last().text().replace(/[\n\t\r›]/g, "").trim();
+                                                                }
                                                             }
                                                             if (b) {
                                                                 b = false;
@@ -92,17 +119,19 @@ router.get('/getCW', (req, res) => {
                                                     data['color'] = '';
                                                     v$('#tabColours ul.ul-horz ul.ul-horz li').each(function (i, elm) {
                                                         data['color'] = data['color'] + ", " + v$("div.colorName", this).text().replace(/[\n\t\r]/g, "").trim();
-                                                    })
+                                                    });
 
                                                     var dbData = {};
-                                                    for (var key in data) {
-                                                        if (key in commonApis.scrapperFieldMapping) {
-                                                            dbData[commonApis.scrapperFieldMapping[key]] = data[key];
-                                                        }
+                                                    data['others'] = '';
+                                                    for (var key in otherArray) {
+                                                        data['others'] += '"' + key + ":" + otherArray[key] + '", ';
+//                                                        if (key in commonApis.scrapperFieldMapping) {
+//                                                            dbData[commonApis.scrapperFieldMapping[key]] = data[key];
+//                                                        }
                                                     }
-
+//                                                    data['others'] = data['others'].substring(0, 9999);
                                                     //save data in mysql db
-                                                    dbModel.saveCWData(dbData);
+                                                    dbModel.saveCWData(data);
 //                                                    throw BreakException;
                                                 }
                                             });
@@ -168,7 +197,8 @@ router.get('/getCD', (req, res) => {
 
                                 return request.getAsync(elem).spread(function (response, body) {
                                     var v$ = cheerio.load(body);
-                                    var data = [];
+                                    var data = {};
+                                    var otherArray = [];
                                     //extract and save data in db.
                                     data['model_url'] = modelUrl;
                                     data['make_url'] = makeUrl;
@@ -196,23 +226,59 @@ router.get('/getCD', (req, res) => {
                                             specs$('div.comparewrap table.specinner').each(function (i, elm) {
                                                 specs$("tbody.compcontent.comparetable.width100 tr", this).each(function (i, elm) {
                                                     specs$('td:eq(0)', this).children().remove();
-                                                    data[specs$('td:eq(0)', this).text().replace(/[\n\t\r]/g, "").trim()] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    var tld = specs$('td:eq(0)', this).text().replace(/[\n\t\r]/g, "").trim();
+                                                    if (tld === 'Fuel Type') {
+                                                        data['fuel_type'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else if (tld === 'Transmission Type') {
+                                                        data['transmission_type'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else if (tld === 'Transmission Type') {
+                                                        data['transmission_type'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else if (tld === 'Seating Capacity') {
+                                                        data['seating_capacity'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else if (tld === 'Engine Displacement(cc)') {
+                                                        data['displacement'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else if (tld === 'Gear box') {
+                                                        data['no_of_gears'] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                    } else {
+                                                        if (specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim() != '' &&
+                                                                specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim() != 'No' &&
+                                                                specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim() != '-' &&
+                                                                specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim() != 'NA') {
+                                                            otherArray[tld] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                        }
+                                                    }
+//                                                    data[specs$('td:eq(0)', this).text().replace(/[\n\t\r]/g, "").trim()] = specs$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
                                                 });
                                             });
                                         }).then(() => {
-                                            console.log(data);
+//                                            console.log(data);
                                             var featuresLink = v$('div#tabsection.tabsection div.modelnewtab div#modeltab.modeltab div ul li[title=Features] a').attr('href').trim();
                                             return request.getAsync(featuresLink).spread(function (response, body) {
                                                 var featuresLink$ = cheerio.load(body);
-                                                featuresLink$('div.comparewrap table.specinner').each(function (i, elm) {
-                                                    featuresLink$("tbody.compcontent.comparetable.width100 tr", this).each(function (i, elm) {
-                                                        featuresLink$('td:eq(0)', this).children().remove();
-                                                        data[featuresLink$('td:eq(0)', this).text().replace(/[\n\t\r]/g, "").trim()] = featuresLink$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                featuresLink$('div.comparewrap div.specinner div').each(function (i, elm) {
+                                                    featuresLink$("div.compcontent ul li", this).each(function (i, elm) {
+                                                        var lp = featuresLink$('div.compareleft.textalignunset', this).text().replace(/[\n\t\r›]/g, "").trim();
+                                                        if (featuresLink$('div.compareright div.W50Percent span', this).hasClass('comparerighticon')) {
+                                                            otherArray[lp] = 'Yes';
+                                                        }
+//                                                        data[featuresLink$('td:eq(0)', this).text().replace(/[\n\t\r]/g, "").trim()] = featuresLink$('td:eq(1)', this).text().replace(/[\n\t\r›]/g, "").trim();
                                                     });
                                                 });
-                                            })
+                                            });
                                             throw BreakException;
-                                        })
+                                        }).then(() => {
+//                                            console.log(data, '+++++Data+++++');
+//                                            console.log(otherArray, '+++++OtherArray+++++');
+                                            var dbData = {};
+                                            data['others'] = '';
+                                            for (var key in otherArray) {
+                                                data['others'] += '"' + key + ":" + otherArray[key] + '", ';
+                                            }
+                                            
+                                            data['popularity'] = Math.floor(Math.random() * 30);
+                                            //save data in mysql db
+                                            dbModel.saveCWData(data);
+                                        });
                                     });
 
 //                                    return data;
