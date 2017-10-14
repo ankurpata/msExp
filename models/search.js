@@ -105,14 +105,14 @@ var getWhereStr = (data) => {
 
 var getH1 = (urlStr) => {
     var h1 = 'New Cars in India';
-    if(urlStr){
+    if (urlStr && urlStr != 'newcars' && urlStr != '#') {
         h1 = urlStr.replace(/-/g, " ");
     }
     return commonApis.titleCase(h1);
 }
 var getDesc = (urlStr) => {
     var h1 = 'New Cars in India';
-    if(urlStr && urlStr != 'newcars' && urlStr != '#'){
+    if (urlStr && urlStr != 'newcars' && urlStr != '#') {
         h1 = urlStr.replace(/-/g, " ");
     }
     return commonApis.titleCase(h1);
@@ -154,10 +154,10 @@ var searchCars = (data, res, callback) => {
             heading.metaTags = {
                 title: getH1(data['urlStr']) + " | Get discount upto 10% on selected dealers.",
                 //            canonical: "new Canonical dynamic",
-                description: (result.length ?  commonApis.getTime() + ' - ' + commonApis.getIndianFormat(numRows) +
+                description: (result.length ? commonApis.getTime() + ' - ' + commonApis.getIndianFormat(numRows) +
                         " cars listings found | Get details for " +
-                        result[0]['make'] + " " + result[0]['model'] + " " + result[0]['domain'].toUpperCase() + ", " + 
-                        result[1]['make'] + " " + result[1]['model'] + " " + result[1]['domain'].toUpperCase() 
+                        result[0]['make'] + " " + result[0]['model'] + " " + result[0]['domain'].toUpperCase() + ", " +
+                        result[1]['make'] + " " + result[1]['model'] + " " + result[1]['domain'].toUpperCase()
                         : commonApis.getTime() + " - " + "No listings found for " + getH1(data['urlStr'])),
                 keywords: getH1(data['urlStr']) + ", new cars, carwale, cardehko",
             };
