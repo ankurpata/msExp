@@ -25,7 +25,7 @@ class MainComponent extends Component {
 //        b = arr[3].split("-");
         var items = [];
         for (var i = 0; i < b.length; i++) {
-            if (b[i] === 'newcars' || (!b[i])) {
+            if (b[i] === 'newcars' || (!b[i]) || b[i] === '#') {
                 continue;
             }
             var item = {};
