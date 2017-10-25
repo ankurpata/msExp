@@ -10,7 +10,7 @@ class LoadMoreContainer extends Component {
     
     render() {
         return (
-                <div id="loadMore" onClick={this.onLoadMoreClick} className={ this.props.carlist.length ? 'btn btn-block btn-lg btn-primary' : 'hideMe' } >
+                <div id="loadMore" onClick={this.onLoadMoreClick} className={ (this.props.carlist && this.props.carlist.length) ? 'btn btn-block btn-lg btn-primary' : 'hideMe' } >
                     Load More
                 </div>
                 );
