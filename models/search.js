@@ -92,6 +92,7 @@ var getWhereStr = (data) => {
     if (data['others']) {
         where.push(getClause(data['others'], 'others'));
     }
+      
     if (where.length > 0) {
         retWhere += "WHERE " + where.map(function (elem) {
             return elem;
@@ -117,9 +118,10 @@ var getDesc = (urlStr) => {
     }
     return commonApis.titleCase(h1);
 }
-var getQuery = (what, where, pageNo) => {
-
-    var domainIds = [1, 2, 3, 4, 5, 6];
+var getQuery = (what, where, pageNo, domainIds) => {
+    if(!domainIds){
+        domainIds = [1, 2, 3, 4, 5, 6];
+    }
     if (!where) {
         where = " WHERE ";
     } else {
@@ -128,7 +130,7 @@ var getQuery = (what, where, pageNo) => {
     var sql = domainIds.map(function (elem) {
         return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model ORDER BY popSum DESC LIMIT " + (pageNo * 4) + ', 8' + " )";
     }).join(" UNION ALL ");
-//    console.log(sql, '---sqll--');
+    console.log(sql, '---sqll--');
     return sql;
 };
 var searchCars = (data, res, callback) => {
@@ -136,28 +138,28 @@ var searchCars = (data, res, callback) => {
     var what = getWhat();
 //    console.log(getQuery(what, where, data['pageNo']), " : Query");
 
-    db.query(getQuery(what, where, data['pageNo']), function (err, result, fields) {
+    db.query(getQuery(what, where, data['pageNo'],  data['domain_unique_id'] ? data['domain_unique_id']: null ), function (err, result, fields) {
         if (err) {
             throw err;
         }
 
         var response = {};
         response.carlist = result;
-        db.query("SELECT count(1) as total_count from nc_cars " + where, function (err, result2, fields) {
+        db.query("SELECT  count(distinct model, domain) as total_count from nc_cars " + where, function (err, result2, fields) {
             if (err) {
                 throw err;
             }
             var numRows = result2[0].total_count;
+            console.log(numRows, '-numRows--numRows')
             var heading = {};
             heading.h1Text = getH1(data['urlStr']);
             heading.h2Text = commonApis.getIndianFormat(numRows) + " new car listings found across 6 different platforms.";
             heading.metaTags = {
-                title: getH1(data['urlStr']) + " | Get discount upto 10% on selected dealers.",
+                title: getH1(data['urlStr']) + " | Get discount upto 10% | Best Price Guaranteed",
                 //            canonical: "new Canonical dynamic",
                 description: (result.length ? commonApis.getTime() + ' - ' + commonApis.getIndianFormat(numRows) +
-                        " cars listings found | Get details for " +
-                        result[0]['make'] + " " + result[0]['model'] + " " + result[0]['domain'].toUpperCase() + ", " +
-                        result[1]['make'] + " " + result[1]['model'] + " " + result[1]['domain'].toUpperCase()
+                        " cars listings found | New Car Prices | Get details for " +
+                        result[0]['make'] + " " + result[0]['model'] + " " + result[0]['domain'].toUpperCase() 
                         : commonApis.getTime() + " - " + "No listings found for " + getH1(data['urlStr'])),
                 keywords: getH1(data['urlStr']) + ", new cars, carwale, cardehko",
             };

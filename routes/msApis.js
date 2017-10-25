@@ -94,28 +94,32 @@ var processParams = (params) => {
                 }
             } else {
                 var tmp = param['id'].split(" ");
-                //TODO: process na params by hitting autosugges api
-                return new Promise((resolve, reject) => {
+                if (tmp[0].trim().toLowerCase() !== 'new' && tmp[0].trim() !== 'buy' && tmp[0].trim() !== 'cars') {
+                    //TODO: process na params by hitting autosugges api
+                    return new Promise((resolve, reject) => {
 
-                    fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
-                            .then((response) => {
-                                if (response) {
-                                    return response.json()
-                                } else {
-                                    return false;
-                                }
-                            })
-                            .then((json) => {
-                                console.log('--------------', json);
-                                if (json.length) {
-                                    finalParams[ json[0]['type']] = json[0]['id'].split(" ");
-                                    console.log('--------------', finalParams);
-                                    resolve(true);
-                                } else {
-                                    resolve(true);
-                                }
-                            });
-                });
+                        fetch(`http://www.motorsingh.com/home/fetchSuggestionsNC?queryStr=${tmp[0]}`)
+                                .then((response) => {
+                                    if (response) {
+                                        return response.json()
+                                    } else {
+                                        return false;
+                                    }
+                                })
+                                .then((json) => {
+                                    console.log('--------------', json);
+                                    if (json.length) {
+                                        var ttd = (json[0]['id'] + "").split(" ");
+                                        ttd = filterStopWords(ttd, json[0]['type'] );
+                                        finalParams[ json[0]['type']] = ttd;
+                                        console.log('--------------', finalParams);
+                                        resolve(true);
+                                    } else {
+                                        resolve(true);
+                                    }
+                                });
+                    });
+                }
             }
         }).then(() => {
             resolve(finalParams);
@@ -123,6 +127,20 @@ var processParams = (params) => {
     });
 };
 
+
+var filterStopWords = (arr, type) => {
+    var ret = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].length < 2 && type !== 'domain_unique_id') {
+            continue;
+        }
+        if (arr[i].toLowerCase() == 'new' || arr[i] == 'cars') {
+            continue;
+        }
+        ret.push(arr[i]);
+    }
+    return ret;
+}
 router.post('/searchCars', (req, res) => {
     console.log('---Search Api---');
     console.log(req.body, 'req.body');
@@ -134,7 +152,7 @@ router.post('/searchCars', (req, res) => {
             reqParams['pageNo'] = req.body.pageNo;
         }
         reqParams['urlStr'] = req.body.urlStr;
-        
+
         console.log(reqParams, '????reqParams????');
         searchModel.searchCars(reqParams, res, function (returnedValue) {
             res.json(returnedValue);
