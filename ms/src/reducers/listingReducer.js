@@ -1,6 +1,6 @@
 
 const initialState = {
-    carlist : []
+    carlist : null
 };
 
 export function listingReducer(state = initialState, action) {
