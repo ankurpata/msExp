@@ -6,7 +6,7 @@ import showMoreIcn from '../../images/show-more.svg';
 class Listing extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.item, 'this.props.item');
+//        console.log(this.props.item, 'this.props.item');
     }
     
     listClick = (e) => {
