@@ -143,7 +143,7 @@ var filterStopWords = (arr, type) => {
 }
 router.post('/searchCars', (req, res) => {
     console.log('---Search Api---');
-    console.log(req.body, 'req.body');
+   // console.log(req.body, 'req.body');
     console.log('---Search Api-----------------------------------');
 
     processParams(req.body.tags).then(function (reqParams) {

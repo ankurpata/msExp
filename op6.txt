@@ -1,0 +1,53 @@
+/root/media/msExp/ms/build/static/
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]
+-----SELECT count(1) FROM nc_cars ----
+[ RowDataPacket { 'count(1)': 2323 } ]

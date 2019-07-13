@@ -1,0 +1,58 @@
+/root/media/msExp/ms/build/static/
+Error connecting databases.
+---Search Api---
+{ tags: [ { label: 'newcars', id: 'newcars', type: '' } ],
+  pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+-------------- []
+(node:24542) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): TypeError: Cannot read property 'type' of undefined
+(node:24542) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+---Search Api---
+{ tags: [ { label: 'newcars', id: 'newcars', type: '' } ],
+  pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+-------------- []
+(node:24542) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): TypeError: Cannot read property 'type' of undefined
+---Search Api---
+{ tags: [ { label: 'newcars', id: 'newcars', type: '' } ],
+  pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+-------------- []
+(node:24542) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 3): TypeError: Cannot read property 'type' of undefined
+---Search Api---
+{ tags: [ { label: 'newcars', id: 'newcars', type: '' } ],
+  pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+-------------- []
+(node:24542) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 4): TypeError: Cannot read property 'type' of undefined
+---Search Api---
+{ tags: [ { label: 'newcars', id: 'newcars', type: '' } ],
+  pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+-------------- []
+(node:24542) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 5): TypeError: Cannot read property 'type' of undefined
+---Search Api---
+{ tags: [], pageNo: 0 } 'req.body'
+---Search Api-----------------------------------
+[ pageNo: 0 ] '????reqParams????'
+/root/media/msExp/models/search.js:124
+            throw err;
+            ^
+
+Error: Cannot enqueue Query after fatal error.
+    at Protocol._validateEnqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:201:16)
+    at Protocol._enqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:139:13)
+    at Connection.query (/root/media/msExp/node_modules/mysql/lib/Connection.js:208:25)
+    at Object.searchCars (/root/media/msExp/models/search.js:125:8)
+    at /root/media/msExp/routes/msApis.js:118:21
+    at tryCatcher (/root/media/msExp/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/root/media/msExp/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/root/media/msExp/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/root/media/msExp/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/root/media/msExp/node_modules/bluebird/js/release/promise.js:693:18)
+    at Async._drainQueue (/root/media/msExp/node_modules/bluebird/js/release/async.js:133:16)
+    at Async._drainQueues (/root/media/msExp/node_modules/bluebird/js/release/async.js:143:10)
+    at Immediate.Async.drainQueues [as _onImmediate] (/root/media/msExp/node_modules/bluebird/js/release/async.js:17:14)
+    at runCallback (timers.js:781:20)
+    at tryOnImmediate (timers.js:743:5)
+    at processImmediate [as _immediateCallback] (timers.js:714:5)

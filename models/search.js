@@ -30,7 +30,7 @@ var getWhat = () => {
 
 var getClause = (arr, type) => {
     if (type === 'others' || type === 'make' || type === 'model' || type === 'color') {
-        console.log(arr);
+       // console.log(arr);
         var clause = " ( " + arr.map(function (elem) {
             return type + " like '%" + elem.trim() + "%'";
         }).join(" OR ") + " ) ";
@@ -130,7 +130,7 @@ var getQuery = (what, where, pageNo, domainIds) => {
     var sql = domainIds.map(function (elem) {
         return "(SELECT " + what + " FROM nc_cars " + where + ' domain_unique_id = ' + elem + " GROUP BY make, model ORDER BY popSum DESC LIMIT " + (pageNo * 4) + ', 8' + " )";
     }).join(" UNION ALL ");
-    console.log(sql, '---sqll--');
+   // console.log(sql, '---sqll--');
     return sql;
 };
 var searchCars = (data, res, callback) => {
@@ -150,7 +150,7 @@ var searchCars = (data, res, callback) => {
                 throw err;
             }
             var numRows = result2[0].total_count;
-            console.log(numRows, '-numRows--numRows')
+            //console.log(numRows, '-numRows--numRows')
             var heading = {};
             heading.h1Text = getH1(data['urlStr']);
             heading.h2Text = commonApis.getIndianFormat(numRows) + " new car listings found across 6 different platforms.";

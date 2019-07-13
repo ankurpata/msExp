@@ -14,7 +14,6 @@ var db_config = {
 };
 
 
-
 var connection;
 
 function handleDisconnect() {
@@ -30,8 +29,13 @@ function handleDisconnect() {
     // If you're also serving http, display a 503 error.
     connection.on('error', function (err) {
         console.log('db error', err);
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-            handleDisconnect();                         // lost due to either server restart, or a
+        handleDisconnect();
+
+  if (err.code === 'ETIMEDOUT') {
+            connection.connect();
+        }
+	if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+      //      handleDisconnect();                         // lost due to either server restart, or a
         } else {                                      // connnection idle timeout (the wait_timeout
             throw err;                                  // server variable configures this)
         }
@@ -40,5 +44,14 @@ function handleDisconnect() {
 
 handleDisconnect();
 
+setInterval(function () {
+  var sql = 'SELECT count(1) FROM nc_cars';
+  //connection.query('SELECT count(1) FROM nc_cars');
+  connection.query(sql, function (err, result) {
+  if (err) throw err;
+    console.log( result);
+  });
+  console.log('-----SELECT count(1) FROM nc_cars ----');
+}, 5000);
 
 module.exports = connection;

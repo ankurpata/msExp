@@ -1,0 +1,78 @@
+/root/media/msExp/ms/build/static/
+db error { Error: Connection lost: The server closed the connection.
+    at Protocol.end (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:113:13)
+    at Socket.<anonymous> (/root/media/msExp/node_modules/mysql/lib/Connection.js:109:28)
+    at emitNone (events.js:110:20)
+    at Socket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9) fatal: true, code: 'PROTOCOL_CONNECTION_LOST' }
+error when connecting to db: { Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+    --------------------
+    at Protocol._enqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at Protocol.handshake (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:52:23)
+    at Connection.connect (/root/media/msExp/node_modules/mysql/lib/Connection.js:130:18)
+    at handleDisconnect (/root/media/msExp/config/db.js:23:16)
+    at Connection.<anonymous> (/root/media/msExp/config/db.js:32:9)
+    at emitOne (events.js:115:13)
+    at Connection.emit (events.js:210:7)
+    at Connection._handleProtocolError (/root/media/msExp/node_modules/mysql/lib/Connection.js:433:8)
+    at emitOne (events.js:115:13)
+    at Protocol.emit (events.js:210:7)
+    at Protocol._delegateError (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:392:10)
+    at Protocol.end (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:117:8)
+    at Socket.<anonymous> (/root/media/msExp/node_modules/mysql/lib/Connection.js:109:28)
+    at emitNone (events.js:110:20)
+    at Socket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+  code: 'ECONNREFUSED',
+  errno: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3306,
+  fatal: true }
+error when connecting to db: { Error: connect ECONNREFUSED 127.0.0.1:3306
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+    --------------------
+    at Protocol._enqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:145:48)
+    at Protocol.handshake (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:52:23)
+    at Connection.connect (/root/media/msExp/node_modules/mysql/lib/Connection.js:130:18)
+    at Timeout.handleDisconnect [as _onTimeout] (/root/media/msExp/config/db.js:23:16)
+    at ontimeout (timers.js:469:11)
+    at tryOnTimeout (timers.js:304:5)
+    at Timer.listOnTimeout (timers.js:264:5)
+  code: 'ECONNREFUSED',
+  errno: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 3306,
+  fatal: true }
+---Search Api---
+---Search Api-----------------------------------
+[ pageNo: 0, urlStr: '' ] '????reqParams????'
+/root/media/msExp/models/search.js:141
+            throw err;
+            ^
+
+Error: Cannot enqueue Query after fatal error.
+    at Protocol._validateEnqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:201:16)
+    at Protocol._enqueue (/root/media/msExp/node_modules/mysql/lib/protocol/Protocol.js:139:13)
+    at Connection.query (/root/media/msExp/node_modules/mysql/lib/Connection.js:208:25)
+    at Object.searchCars (/root/media/msExp/models/search.js:141:8)
+    at /root/media/msExp/routes/msApis.js:157:21
+    at tryCatcher (/root/media/msExp/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/root/media/msExp/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/root/media/msExp/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/root/media/msExp/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/root/media/msExp/node_modules/bluebird/js/release/promise.js:693:18)
+    at Async._drainQueue (/root/media/msExp/node_modules/bluebird/js/release/async.js:133:16)
+    at Async._drainQueues (/root/media/msExp/node_modules/bluebird/js/release/async.js:143:10)
+    at Immediate.Async.drainQueues [as _onImmediate] (/root/media/msExp/node_modules/bluebird/js/release/async.js:17:14)
+    at runCallback (timers.js:781:20)
+    at tryOnImmediate (timers.js:743:5)
+    at processImmediate [as _immediateCallback] (timers.js:714:5)
